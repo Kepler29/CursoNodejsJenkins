@@ -18,13 +18,9 @@ node {
     }
   }
   stage('build-image'){
-    steps{
-      sh "docker build -t kepler1987/nodejsapp:${gitcommit} ."
-    }
+    sh "docker build -t kepler1987/nodejsapp:${gitcommit} ."
   }
   stage('deploy') {
-    steps {
-      sh "docker run -p 8090:8090 kepler1987/nodejsapp:${gitcommit}"
-    }
+    sh "docker run -p 8090:8090 kepler1987/nodejsapp:${gitcommit}"
   }
 }
