@@ -15,12 +15,9 @@ node {
     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
     def nuestraapp = docker.build("kepler1987/nodejsapp:${gitcommit}", ".")
     nuestraapp.push()
+    sh "docker stop nodejs"
+    sh "docker rm nodejs"
+    sh "docker run -d --name nodejs -p 8090:8090 ${nuestraapp}"
     }
-  }
-  stage('build-image'){
-    sh "docker build -t kepler1987/nodejsapp:${gitcommit} ."
-  }
-  stage('deploy') {
-    sh "docker run -p 8090:8090 kepler1987/nodejsapp:${gitcommit}"
   }
 }
